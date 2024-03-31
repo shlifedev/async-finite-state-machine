@@ -69,6 +69,7 @@ namespace LD.StateMachine
         private CancellationTokenSource? _onUpdateCancellation = new CancellationTokenSource();
         private CancellationToken _disposedToken;
         private MonoBehaviour _monoBehaviourObject;
+        private bool _waitEnter = false;
         private bool _nonUpdate = false;
         
          
@@ -239,9 +240,11 @@ namespace LD.StateMachine
 
             if (m_currentState != null)
             {
+                _waitEnter = true;
                 currentTask = m_currentState.OnStateEnter(); 
                 await currentTask.Value;
                 currentTask = null;
+                _waitEnter = false;
             }
 
             this._mCurState = key;
@@ -295,9 +298,14 @@ namespace LD.StateMachine
         /// FSM 로직을 업데이트 타이밍에 비동기로 처리합니다.
         /// </summary>
         private async UniTaskVoid StartUpdateLoopAsync(CancellationToken token)
-        { 
+        {
+           
             await foreach (var _ in UniTaskAsyncEnumerable.EveryUpdate().WithCancellation(token))
-            { 
+            {
+                if (_waitEnter)
+                {   
+                    continue;
+                }
                 if (_monoBehaviourObject != null)
                 {
                     if (_monoBehaviourObject.gameObject.activeSelf && _monoBehaviourObject.enabled)
