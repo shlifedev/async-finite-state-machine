@@ -7,4 +7,4 @@ Asynchronous state machines help you write smarter game logic.
 - Support await OnExit
 - If you enter a state called A, then state A behaves as follows.  
 `OnEnter (await) -> OnUpdate (await) -> Wait for ChangeState`
-- If you want to transition from state A to state B, you will wait until the Task of the Enter function in state A is finished.
+- If you want to transition from state A to state B, you will wait until the Task of the Enter/Exit function in state A is finished.
