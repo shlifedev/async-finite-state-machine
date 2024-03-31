@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks; 
-using Macovill.LuckyByte;
+using LD.AI.AsyncFSM;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Linq;
 using UnityEngine; 
 
-namespace Macovill.LuckyByte
+namespace LD.AI.AsyncFSM
 {
     [Serializable]
     public class AsyncStateMachine<TStateKey> : IDisposable

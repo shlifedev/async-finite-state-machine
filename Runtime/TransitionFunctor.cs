@@ -1,7 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 
-namespace Macovill.LuckyByte
+namespace LD.AI.AsyncFSM
 {
     /// <summary>
     /// ITransition의 콜백 클래스 구현

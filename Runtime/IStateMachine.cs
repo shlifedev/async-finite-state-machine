@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 
-namespace Macovill.LuckyByte
+namespace LD.AI.AsyncFSM
 {    
     public interface IStateMachine
     {

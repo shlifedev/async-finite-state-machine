@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks; 
 using UnityEngine;
 
-namespace Macovill.LuckyByte
+namespace LD.AI.AsyncFSM
 {
     public abstract class StateBase<TStateKey> : IState where TStateKey : struct
     {   

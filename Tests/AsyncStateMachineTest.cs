@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
-using Macovill.LuckyByte;
+using LD.AI.AsyncFSM;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.TestTools;

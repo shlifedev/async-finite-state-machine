@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 
-namespace Macovill.LuckyByte
+namespace LD.AI.AsyncFSM
 {
     /// <summary>
     /// 상태 인터페이스
