@@ -1,7 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 
-namespace LD.AI.AsyncFSM
+namespace LD.StateMachine
 {
     /// <summary>
     /// ITransition의 콜백 클래스 구현

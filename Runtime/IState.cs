@@ -1,6 +1,6 @@
 using Cysharp.Threading.Tasks;
 
-namespace LD.AI.AsyncFSM
+namespace LD.StateMachine
 {
     /// <summary>
     /// 상태 인터페이스

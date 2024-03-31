@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 using Cysharp.Threading.Tasks.Linq;
 using UnityEngine; 
 
-namespace LD.AI.AsyncFSM
+namespace LD.StateMachine
 {
     [Serializable]
     public class AsyncStateMachine<TStateKey> : IDisposable
@@ -261,9 +261,9 @@ namespace LD.AI.AsyncFSM
 
         async UniTask UpdateTransitionAsync()
         { 
-            if (Transitions == null) return;
+            if (Transitions == null) return; 
             if (this.Transitions.ContainsKey(this.CurState.Value))
-            {
+            { 
                 var link = this.Transitions[CurState.Value];
                 for (var index = 0; index < link.Callbacks.Count; index++)
                 {
@@ -271,8 +271,9 @@ namespace LD.AI.AsyncFSM
                     var shouldTransition = await callback.ShouldTransition();
                     if (shouldTransition)
                     {
-                        await UniTask.WaitUntil(() => currentTask == null);
-                        // 현재는 트랜지션이 가능한 상태더라도 현재 state의 task가 종료 되어야만 호출 됨.  
+                         
+                        await UniTask.WaitUntil(() => { return currentTask == null; });
+                        // 현재는 트랜지션이 가능한 상태더라도 현재 state의 task가 종료 되어야만 호출 됨.   
                         await ChangeStateAsync(link.To);
                     }
                 }
@@ -296,18 +297,17 @@ namespace LD.AI.AsyncFSM
         private async UniTaskVoid StartUpdateLoopAsync(CancellationToken token)
         { 
             await foreach (var _ in UniTaskAsyncEnumerable.EveryUpdate().WithCancellation(token))
-            {
-             
+            { 
                 if (_monoBehaviourObject != null)
                 {
                     if (_monoBehaviourObject.gameObject.activeSelf && _monoBehaviourObject.enabled)
                     {
-                        await LogicAsync();
+                        await LogicAsync().SuppressCancellationThrow();
                     }
                 }
                 else
-                { 
-                    await LogicAsync(); 
+                {
+                    await LogicAsync().SuppressCancellationThrow();
                 }
             } 
         }

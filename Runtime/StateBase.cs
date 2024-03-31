@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks; 
 using UnityEngine;
 
-namespace LD.AI.AsyncFSM
+namespace LD.StateMachine
 {
     public abstract class StateBase<TStateKey> : IState where TStateKey : struct
     {   
