@@ -69,7 +69,7 @@ namespace Macovill.LuckyByte
         private MonoBehaviour _monoBehaviourObject;
        
         
-        
+         
  
  
         private IState m_currentState; 
