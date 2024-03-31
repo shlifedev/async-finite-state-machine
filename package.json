@@ -1,0 +1,10 @@
+{
+  "displayName": "LD.AsyncStateMachine",
+  "name": "com.shlifedev.asyncfsm",
+  "version": "1.0.0", 
+  "description": "Unity Asynchronous Finite State Machine ",
+  "category": "Libraries",
+  "dependencies": {
+    "com.cysharp.unitask" : "2.5.4"
+  }
+}
