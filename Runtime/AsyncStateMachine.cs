@@ -244,32 +244,7 @@ namespace Macovill.LuckyByte
 
             this._mCurState = key;
         }
-        
-        /// <summary>
-        /// 이 함수는 CurState에 직접 값을 대입하는것과 동일한 동작을 합니다.
-        /// </summary>
-        public async UniTask ChangeStateImediate(TStateKey key)
-        {
-            if (_mCurState.Equals(key))
-            {  
-                return;   
-            }
-                
-            if (m_currentState != null)
-            {
-                await m_currentState.OnStateExit();
-            }
-
-            m_currentState = States[key];
-            _mCurState = key;
-
-            if (m_currentState != null)
-            {
-                await m_currentState.OnStateEnter();
-            }
-
-            this._mCurState = key;
-        }
+         
         async UniTask LogicAsync()
         {
             // 트랜지션이 완료되기 전까지 State 업데이트를 별도로 실행하지 않습니다.
@@ -313,19 +288,20 @@ namespace Macovill.LuckyByte
         /// FSM 로직을 업데이트 타이밍에 비동기로 처리합니다.
         /// </summary>
         private async UniTaskVoid StartUpdateLoopAsync(CancellationToken token)
-        {
+        { 
             await foreach (var _ in UniTaskAsyncEnumerable.EveryUpdate().WithCancellation(token))
             {
+             
                 if (_monoBehaviourObject != null)
                 {
                     if (_monoBehaviourObject.gameObject.activeSelf && _monoBehaviourObject.enabled)
                     {
-                        await LogicAsync().SuppressCancellationThrow();
+                        await LogicAsync();
                     }
                 }
                 else
                 { 
-                    await LogicAsync().SuppressCancellationThrow(); 
+                    await LogicAsync(); 
                 }
             } 
         }

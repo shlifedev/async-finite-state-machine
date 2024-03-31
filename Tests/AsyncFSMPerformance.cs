@@ -11,17 +11,18 @@ public class AsyncFSMPerformance : MonoBehaviour
     { 
         public override async UniTask OnStateEnter()
         {
-            Debug.Log("Enter" + StateMachine.CurState);
+            
+            
         }
 
         public override async UniTask OnStateUpdate()
         {
-            Debug.Log("hi");
+          
         }
 
         public override async UniTask OnStateExit()
         {
-            Debug.Log("Exit" + StateMachine.CurState);
+       
         }
     }
 
@@ -33,7 +34,7 @@ public class AsyncFSMPerformance : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        fsm = new AsyncStateMachine<MyEnum>(this.destroyCancellationToken);
+        fsm = new AsyncStateMachine<MyEnum>(this);
         fsm.Add(MyEnum.SampleA, new SampleState()); 
        
     }

@@ -5,7 +5,10 @@
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "LD.AsymcFSM.Runtime",
-        "UniTask"
+        "UniTask",
+        "UniTask.Linq",
+        "UniTask.Addressables",
+        "UniTask.DOTween"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
