@@ -24,4 +24,6 @@ namespace Macovill.LuckyByte
         /// <returns></returns>
         public abstract UniTask OnStateExit();
     }
+    
+    
 }

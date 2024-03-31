@@ -51,23 +51,25 @@ namespace Macovill.LuckyByte
         /// 스테이트 머신 생성자입니다. 라이프사이클 오브젝트는 스테이트 머신의 생명주기 관리를 위해 필요합니다.
         /// </summary>
         /// <param name="lifecycleObject"></param>
-        public AsyncStateMachine(MonoBehaviour lifecycleObject)
+        public AsyncStateMachine(MonoBehaviour lifecycleObject, bool nonUpdate = false)
         {
             this._monoBehaviourObject = lifecycleObject; 
-        }  
-        
+            _nonUpdate = nonUpdate;
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="cancelToken"></param>
-        public AsyncStateMachine(CancellationToken cancelToken)
+        public AsyncStateMachine(CancellationToken cancelToken, bool nonUpdate = false)
         { 
-            _disposedToken = cancelToken; 
+            _disposedToken = cancelToken;
+            _nonUpdate = nonUpdate;
         }   
         private CancellationTokenSource? _onUpdateCancellation = new CancellationTokenSource();
         private CancellationToken _disposedToken;
         private MonoBehaviour _monoBehaviourObject;
-       
+        private bool _nonUpdate = false;
         
          
  
@@ -248,7 +250,11 @@ namespace Macovill.LuckyByte
         async UniTask LogicAsync()
         {
             // 트랜지션이 완료되기 전까지 State 업데이트를 별도로 실행하지 않습니다.
-            await UpdateTransitionAsync(); 
+            await UpdateTransitionAsync();
+            
+            if (_nonUpdate)
+                return;
+            
             await UpdateState().AttachExternalCancellation(_onUpdateCancellation.Token); 
         }
 
