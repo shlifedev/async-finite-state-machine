@@ -71,8 +71,9 @@ namespace LD.StateMachine
         private MonoBehaviour _monoBehaviourObject;
         private bool _waitEnter = false;
         private bool _nonUpdate = false;
-        
-         
+
+
+        private bool _waitExit = false;
  
  
         private IState m_currentState; 
@@ -221,17 +222,18 @@ namespace LD.StateMachine
         /// 이 함수는 CurState에 직접 값을 대입하는것과 동일한 동작을 합니다.
         /// </summary>
         public async UniTask ChangeStateAsync(TStateKey key)
-        {
-            if (_mCurState.Equals(key))
-                return;
-
+        { 
+            if (_mCurState.Equals(key) || _waitExit || _waitEnter)
+                return;  
 
             if (m_currentState != null)
             {
-                _onUpdateCancellation?.Cancel();
-                currentTask = m_currentState.OnStateExit();
-               
+                _waitExit = true;
+                _onUpdateCancellation?.Cancel();  
+                currentTask = m_currentState.OnStateExit(); 
                 await currentTask.Value;
+                _onUpdateCancellation?.Dispose();
+                _onUpdateCancellation = new CancellationTokenSource(); 
                 currentTask = null;
             }
 
@@ -245,6 +247,7 @@ namespace LD.StateMachine
                 await currentTask.Value;
                 currentTask = null;
                 _waitEnter = false;
+                _waitExit = false;
             }
 
             this._mCurState = key;
@@ -257,7 +260,9 @@ namespace LD.StateMachine
             
             if (_nonUpdate)
                 return;
-            
+             
+            if(_waitExit)
+                return;
             await UpdateState().AttachExternalCancellation(_onUpdateCancellation.Token); 
         }
 
@@ -302,7 +307,7 @@ namespace LD.StateMachine
            
             await foreach (var _ in UniTaskAsyncEnumerable.EveryUpdate().WithCancellation(token))
             {
-                if (_waitEnter)
+                if (_waitEnter )
                 {   
                     continue;
                 }
