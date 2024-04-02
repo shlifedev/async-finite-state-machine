@@ -1,7 +1,7 @@
 {
   "displayName": "LD.AsyncStateMachine",
   "name": "com.shlifedev.asyncfsm",
-  "version": "1.0.0", 
+  "version": "1.0.1", 
   "description": "Unity Asynchronous Finite State Machine ",
   "category": "Libraries",
   "dependencies": {
